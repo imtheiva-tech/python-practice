@@ -1,3 +1,18 @@
+class Payment:
+    def pay(self, amount):
+        return f"Paying ₹{amount}"
+class UPIPayment(Payment):
+    def pay(self, amount):
+        return f"Paying ₹{amount} via UPI"
+
+class CardPayment(Payment):
+    def pay(self, amount):
+        return f"Paying ₹{amount} via Card"
+
+class CashPayment(Payment):
+    def pay(self, amount):
+        return f"Paying ₹{amount} via Cash"
+
 class ShoppingCart:
 
     #product list
@@ -58,6 +73,11 @@ class ShoppingCart:
         discount_amount = subtotal * (self.__discount / 100)
         self.__total_price = subtotal - discount_amount
         return f"Total price after discount - {self.__total_price}"
+
+    def pay(self, payment_method):
+        if self.__total_price == 0:
+            return "Please checkout first"
+        return payment_method.pay(self.__total_price)
             
                  
 customer1 = ShoppingCart("Watson")
@@ -69,8 +89,10 @@ print(customer1.add_item("Television"))  # not in catalogue
 print(customer1.view_cart())
 print(customer1.apply_discount())
 print(customer1.checkout())
+print(customer1.pay(CardPayment()))
 
 # handles empty cart
 print(customer2.view_cart()) 
 print(customer2.apply_discount())
 print(customer2.checkout())
+print(customer2.pay(CardPayment()))
